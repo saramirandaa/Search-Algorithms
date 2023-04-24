@@ -42,7 +42,40 @@ class algorithms_menu:
         return queue
     
     def a_star(self):
-        return 'hello'
+
+        queue = [(0, self.start)]
+        came_from = {}
+        cost_so_far = {}
+        came_from[self.start] = None
+        cost_so_far[self.start] = 0
+        
+        while queue:
+            current_node = queue[0][1]
+            queue = queue[1:]
+            
+            if current_node == self.goal:
+                break
+            
+            node_childs = [node_tuple[1] for node_tuple in self.tree if node_tuple[0] == current_node]
+            
+            for child in node_childs:
+                new_cost = cost_so_far[current_node] + 1 # assuming a uniform cost of 1 for all edges
+                if child not in cost_so_far or new_cost < cost_so_far[child]:
+                    cost_so_far[child] = new_cost
+                    priority = new_cost + self.heuristic[child]
+                    queue.append((priority, child))
+                    queue.sort()
+                    came_from[child] = current_node
+        
+        path = [self.goal]
+        current = self.goal
+        while current != self.start:
+            current = came_from[current]
+            path.append(current)
+        path.reverse()
+        
+        return path
+    
     def weighted_a_star(self):
         pass
     def Beam(self):
@@ -74,6 +107,7 @@ def main():
     menu = algorithms_menu(tree, Pheuristic, start, goal)
     #mandamos llamar el primer método
     print('PATH: ',menu.greedy_bestfirst())
+    print('PATH: ',menu.a_star())
 
     
 
