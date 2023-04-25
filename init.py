@@ -99,7 +99,7 @@ class algorithms_menu:
 def main():
     #Aqui se manda llamar el grafo y nos da una lista de tuplas con todas las conexiones
     tree = graph.fgraph.get_Tuples()
-    #print(tree)
+    print(tree)
 
     start = "CANCUN"
     goal = "CUERNAVACA"
