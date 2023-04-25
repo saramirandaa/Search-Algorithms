@@ -42,14 +42,20 @@ class algorithms_menu:
         return queue
     
     def a_star(self):
-
+        #we initialize a queue with the starting node and with 
         queue = [(0, self.start)]
+        #we create a came from dictionary which will tell us the path we took
         came_from = {}
+        #we create another dictionary which will tell us the costs of the nodes
         cost_so_far = {}
+        #we initialize the dictionary of the starting node with an empty cost       
         came_from[self.start] = None
+        #we initialize the dictionary of the starting node with a cost of 0
         cost_so_far[self.start] = 0
         
+        #while our queue is not empty we start searching for the node with the lowest cost 
         while queue:
+            #initialize the current node with the starting node
             current_node = queue[0][1]
             queue = queue[1:]
             
@@ -96,7 +102,7 @@ def main():
     #print(tree)
 
     start = "CANCUN"
-    goal = "MERIDA"
+    goal = "CUERNAVACA"
 
     #Aqui se manda llamar la heuristica con el goal, te da un diccionario con 
     #{la ciudad: heuristica}
