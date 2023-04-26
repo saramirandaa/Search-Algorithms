@@ -16,8 +16,8 @@
     Ejecución:
         1) Usar graph_creation.py para crear un objeto Graph a partir de un archivo csv.
         2) Usar get_euclidean_distance.py para calcular los valores de la heurística de distancia de línea recta.
-        3) Importar la función a_star en el archivo donde se desee utilizar.
-        4) Llamar la función a_star con los parámetros necesarios e imprimir el resultado.
+        3) Importar el archivo weighted_a_star en el archivo donde se desee utilizar.
+        4) Llamar la función weighted_a_star con los parámetros necesarios e imprimir el resultado.
 
     Entradas:
         1) Un objeto Graph
