@@ -188,7 +188,7 @@ def get_haversine_distance(cityname_1, cityname_2):
                            cities_coordinates[cityname_2][1]) * math.pi / 180
     
     # Semiverseno( lat1 - lat2 )
-    term1 = math.pow( math.sin( latitude_difference/2 ) , 2)
+    term1 = math.pow( math.sin( lat_dif/2 ) , 2)
     
     #cos( long1 'in radians' ) 
     term2 = math.cos( cities_coordinates[cityname_1][0] * math.pi / 180 )

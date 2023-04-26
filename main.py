@@ -30,6 +30,8 @@ import a_star
 import weighted_a_star as wa_star
 import simulated_annealing as sa
 import steepest as shc
+import get_euclidean_distance as harvesine 
+import BeamSearch as beam
 
 #Menú de selección de algoritmos: 0.5 pts
 #Tiempo de ejecución de cada algoritmo: 0.25 pts
@@ -63,6 +65,17 @@ def ask_log():
     else:
         log = False
 
+
+def selec_user():
+    start = input("Introduce el nodo de inicio: ")
+    start=start.upper()
+    
+    goal = input("Introduce el nodo de salida: ")
+    goal= goal.upper()
+    
+    return start, goal
+
+
 # menu
 #   Método que imprime un menú de selección de algoritmos
 # Sin entrada
@@ -86,6 +99,10 @@ def menu():
 #   Método que crea un Graph con los archivos csv y ejecuta los algoritmos de búsqueda
 # Sin entrada
 def main():
+
+    #Se pide al usuario que introduzca el nodo de inicio, de fin y la heurística
+    start,goal= selec_user()
+    
     # Se pregunta al usuario si desea imprimir información de depuración
     ask_log()
 
@@ -94,13 +111,12 @@ def main():
 
     # Se obtiene una lista de tuplas con el grafo
     mexico_tree = mexico_graph.get_tuples()
-        
-    # Se define el nodo de inicio y el nodo meta
-    start = "CANCUN"
-    goal = "DURANGO"
-
+    
     # Se obtiene una lista con las heurísticas 
     heuristics = heuristic.calcular_heuristica_distancia_de_linea_recta(goal)
+
+    #Se obtiene el harvesine
+    harvesines = harvesine.get_haversine_distance(start,goal)
 
     # Se imprime el grafo
     if log:
@@ -129,7 +145,8 @@ def main():
         print(a_star.a_star(mexico_tree, start, goal, heuristics, log = log))
     elif (opc == 4):
         print("Beam Search (The Original algorithm)")
-        # BEAM
+        k = int(input("Introduce el beam width (ancho del haz): "))
+        print(beam.BeamSearch(mexico_tree,start,goal,k, log =log))
         pass
     elif (opc == 5):
         print("Steepest Ascent Hill Climbing Search")
