@@ -177,4 +177,40 @@ def get_heuristic(goal_city):
     print('La heuristica para la ciudad objetivo {} es {}'.format(goal_city,hlsd))
     print(hlsd['CANCUN'])
 
-# se manda llamar la funcion principal
+def get_haversine_distance(cityname_1, cityname_2):
+    
+    #Diferencia de latitud (en radianes)
+    lat_dif = (cities_coordinates[cityname_1][0] - 
+                           cities_coordinates[cityname_2][0]) * math.pi / 180
+    
+    #Diferencia de longitud (en radianes)
+    lon_dif = (cities_coordinates[cityname_1][1] - 
+                           cities_coordinates[cityname_2][1]) * math.pi / 180
+    
+    # Semiverseno( lat1 - lat2 )
+    term1 = math.pow( math.sin( latitude_difference/2 ) , 2)
+    
+    #cos( long1 'in radians' ) 
+    term2 = math.cos( cities_coordinates[cityname_1][0] * math.pi / 180 )
+    
+    #cos( long2 'in radians' ) 
+    term3 = math.cos( cities_coordinates[cityname_2][0] * math.pi / 180 )
+    
+    #semiversin( long1 - long2 ) 
+    term4 = math.pow( math.sin( lon_dif/2 ) , 2)
+    
+    #                               cos( long2 'in radians' ) * semiversin( long1 - long2 )
+    dist_semiversene = term1 + term2 * term3 * term4 
+    
+    #Earth radius lenght in km
+    R = 6357
+    
+    #distance = 2 * R * arcsin( sqrt( semiversin( distance/R ) ) ) 
+    haversine_distance = 2 * R * math.asin( math.sqrt(dist_semiversene) )
+    
+    #Reduce to 2 decimals
+    haversine_distance = round( haversine_distance, 2 )
+    
+    #Return the distance in Km
+    return haversine_distance
+
