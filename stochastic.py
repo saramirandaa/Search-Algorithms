@@ -11,7 +11,7 @@
 
     Este algoritmo se calcula con la heuristica de harvesine, utiliza el codigo de best first search y ascenso a la colina para ir buscando el costo (utilizando la heuristica) más pequeño 
     A diferencia del ascenso a la colina steepest, este algoritmo busca un hijo random y de ahí va siguiendo la secuencia hasta encontrar el mejor costo
-    
+
     Ejecución:
         1) Usar graph_creation.py para crear un objeto Graph a partir de un archivo csv.
         2) Usar get_euclidean_distance.py para calcular los valores de la heurística de distancia de línea recta.
@@ -32,8 +32,10 @@
 '''
 
 import random 
+import time
 
-def stochastic_hill_climbing(tree, start, goal, heuristic):
+def stochastic_hill_climbing(tree, start, goal, heuristic, log=False):
+        start_time = time.time()
         #we set a certain number of iterations with the purpose of not getting into an infinite loop
         max_iterations=100
         current_node = start
@@ -49,22 +51,40 @@ def stochastic_hill_climbing(tree, start, goal, heuristic):
             best_child = []
             #we create a best cost variable with a very high number in order to get through the first if
             best_cost = float('inf')
+            if log:
+                print('Current node:', current_node)
+                print('Childs:', childs)
+                print('Visited:', visited)
+                print("Best child:", best_child)
             for child in childs:
                 cost = heuristic[child]
+                if log:
+                    print('Child:', child)
+                    print('Cost:', cost)
                 #if the cost (the node's heuristic) is smaller or equal than the best cost and the child is not in the visited list
                 if cost <= best_cost and child not in visited:
                     #it the cost is smaller than the best one we replace it by that one 
                     if cost < best_cost:
                         best_child = [child]
                         best_cost = cost
+                        if log:
+                            print('Best child:', best_child)
+                            print('Best cost:', best_cost)
                     else:
                         best_child.append(child)
+                        if log:
+                            print('Best child:', best_child)
+                            print('Best cost:', best_cost)
             #if we never find a best child we return an empty path
             if not best_child:
                 return None
             #else we choose a random child from the best childs
             current_node = random.choice(best_child)
+           
             iterations += 1
+            if log:
+               print('Current RANDOM node:', current_node)
+               print('Iterations:', iterations)
 
         if current_node != goal:
             return None
@@ -76,7 +96,11 @@ def stochastic_hill_climbing(tree, start, goal, heuristic):
             for node_tuple in tree:
                 if node_tuple[1] == path[-1]:
                     path.append(node_tuple[0])
+                    if log:
+                        print("Path so far: ", path)
                     break
         path.reverse()
-
+        end_time = time.time()
+        if log:
+            print("Tiempo de ejecución interno: ", end_time - start_time)
         return path
