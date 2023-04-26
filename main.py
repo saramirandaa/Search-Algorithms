@@ -25,6 +25,7 @@
 import graph_creation as graph
 import get_euclidean_distance as heuristic
 import greedy_best_first as gbf
+import a_star
 
 #Menú de selección de algoritmos: 0.5 pts
 #Tiempo de ejecución de cada algoritmo: 0.25 pts
@@ -72,7 +73,7 @@ def main():
 
     # Se define el nodo de inicio y el nodo meta
     start = "CANCUN"
-    goal = "CUERNAVACA"
+    goal = "MERIDA"
 
     # Se obtiene una lista con las heurísticas 
     heuristics = heuristic.calcular_heuristica_distancia_de_linea_recta(goal)
@@ -80,7 +81,10 @@ def main():
         print("Heuristics: " + str(heuristics))
 
     gbf_queue = gbf.greedy_best_first(mexico_tree, start, goal, heuristics)
+    a_star_queue = a_star.a_star(mexico_tree, start, goal, heuristics)
+    
     print(gbf_queue)
+    print(a_star_queue)
     # menu = algorithms.algorithms_menu(mexico_tree, heuristic_list, start, goal)
     #mandamos llamar el primer método
     # print('PATH: ',menu.greedy_bestfirst())

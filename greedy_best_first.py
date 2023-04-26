@@ -30,13 +30,14 @@ def greedy_best_first(tree, start, goal, heuristic):
     new_node = ''
     if start == goal:
         return queue
+    
     while queue:
         current_node = queue[-1]
         min_node = 0
         
         if current_node == goal:
             return queue
-
+        
         node_childs = [node_tuple[1] for node_tuple in tree if node_tuple[0] == current_node]    
         
         for child in node_childs:
