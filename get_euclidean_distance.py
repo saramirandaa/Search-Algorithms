@@ -7,7 +7,7 @@
     Clase de Inteligencia Artificial
     Ari Barrera
     22-marzo-2023
-    version 0.001
+    Versión 0.1.0
 
     El presente codigo calcula la distancia euclideana entre dos ciudades 
     de los Estados Unidos Mexicanos, utilizando las coordenadas geograficas 
