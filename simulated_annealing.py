@@ -36,7 +36,9 @@ import random
 import math
 import a_star
 
+### FUNCIÓN PRINCIPAL ###
 def simulated_annealing(graph, start, goal, heuristic, T=0.0, alpha=1.0, stopping_T=0.0, log=False):
+    # Validación de los parámetros de entrada
     if T <= 0:
         T = float(input("La temperatura inicial debe ser mayor que 0. Ingrese un valor: "))
     if alpha <= 0 or alpha >= 1:

@@ -22,12 +22,14 @@
 '''
 
 ### DEPENDENCIAS ###
+import time
 import graph_creation as graph
 import get_euclidean_distance as heuristic
 import greedy_best_first as gbf
 import a_star
 import weighted_a_star as wa_star
 import simulated_annealing as sa
+import steepest as shc
 
 #Menú de selección de algoritmos: 0.5 pts
 #Tiempo de ejecución de cada algoritmo: 0.25 pts
@@ -44,8 +46,28 @@ import simulated_annealing as sa
 #Simulated annealing
 #Genetic algorithms
 
-def menu():
+### VARIABLES GLOBALES ###
+# log (bool) - variable que indica si se imprime información de depuración
+log = True
 
+### FUNCIONES COMPLEMENTARIAS ###
+# ask_log
+#   Método que pregunta al usuario si desea imprimir información de depuración
+# Sin entrada
+# Salida: log (bool) - variable que indica si se imprime información de depuración
+def ask_log():
+    global log
+    log = input("¿Desea imprimir información de depuración? (y/n): ")
+    if log == "y":
+        log = True
+    else:
+        log = False
+
+# menu
+#   Método que imprime un menú de selección de algoritmos
+# Sin entrada
+# Salida: opc (int) - opción seleccionada por el usuario
+def menu():
     print("--¿Qué algoritmo quiere utilizar?--")
     print("1. Greedy Best-First Search")
     print("2. Weighted A* Search")
@@ -56,24 +78,26 @@ def menu():
     print("7. Branch and bound")
     print("8. Simulated Annealing")
     print("9.Terminar")
-    opc = input("Introduzca la opción deseada (1-9): ")
+    opc = int(input("Introduzca la opción deseada (1-9): "))
     return opc
 
+### FUNCIÓN PRINCIPAL ###
 # main
 #   Método que crea un Graph con los archivos csv y ejecuta los algoritmos de búsqueda
 # Sin entrada
 def main():
-    log = True
+    # Se pregunta al usuario si desea imprimir información de depuración
+    ask_log()
 
     # Se crea un grafo con archivos csv
     mexico_graph = graph.csv_to_graph('matrix.csv', 'nodes.csv')
 
     # Se obtiene una lista de tuplas con el grafo
-    mexico_tree = mexico_graph.get_tuples()
+    mexico_tree = mexico_graph.get_tuples_weights()
         
     # Se define el nodo de inicio y el nodo meta
     start = "CANCUN"
-    goal = "TUXTLA"
+    goal = "MERIDA"
 
     # Se obtiene una lista con las heurísticas 
     heuristics = heuristic.calcular_heuristica_distancia_de_linea_recta(goal)
@@ -83,15 +107,51 @@ def main():
         print("Mexico Tree: " + str(mexico_tree) + "\n")
         print("Heuristics: " + str(heuristics) + "\n")
 
-    # gbf_queue = gbf.greedy_best_first(mexico_tree, start, goal, heuristics)
-    # a_star_queue = a_star.a_star(mexico_tree, start, goal, heuristics, log = log)
-    # weighted_a_star_queue = wa_star.weighted_a_star(mexico_tree, start, goal, heuristics, log = log)
-    sa_queue = sa.simulated_annealing(mexico_tree, start, goal, heuristics, log = log)
-    
-    
-    # print(gbf_queue)
-    # print(a_star_queue)
-    # print(weighted_a_star_queue)
-    print(sa_queue)
+    # Se imprime el menú de selección de algoritmos
+    opc = menu()
+    print("Opción seleccionada: " + str(opc) + "\n")
+
+    # Se obtiene el tiempo de inicio
+    start_time = time.time()
+
+    # Se ejecuta el algoritmo seleccionado
+    if (opc == 1):
+        print("Greedy Best-First Search")
+        print(gbf.greedy_best_first(mexico_tree, start, goal, heuristics))
+    elif (opc == 2):
+        print("Weighted A* Search")
+        print(wa_star.weighted_a_star(mexico_tree, start, goal, heuristics, log = log))
+    elif (opc == 3):
+        print("A* search")
+        print(a_star.a_star(mexico_tree, start, goal, heuristics, log = log))
+    elif (opc == 4):
+        print("Beam Search (The Original algorithm)")
+        # BEAM
+        pass
+    elif (opc == 5):
+        print("Steepest Ascent Hill Climbing Search")
+        print(shc.steepest_hill_climbing(mexico_tree, start, goal, heuristics))
+    elif (opc == 6):
+        print("Stochastic Hill Climbing Search")
+        # STOCHASTIC
+        pass
+    elif (opc == 7):
+        print("Branch and bound")
+        # BRANCH AND BOUND
+        pass
+    elif (opc == 8):
+        print("Simulated Annealing")
+        print(sa.simulated_annealing(mexico_tree, start, goal, heuristics, log = log))
+    elif (opc == 9):
+        print("Terminando...")
+        exit()
+
+    # Se obtiene el tiempo de fin
+    end_time = time.time()
+    print("Tiempo de ejecución: " + str(end_time - start_time) + " segundos")
+    print()
+
+    # Se repite el menú de selección de algoritmos
+    main()
 
 main()

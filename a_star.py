@@ -29,6 +29,7 @@
     Salidas:
         1) Una lista con los nombres de los nodos que conforman la ruta más corta entre el nodo de partida y el nodo de llegada.
 '''
+### FUNCIÓN PRINCIPAL ###
 def a_star(graph, start, goal, heuristic, log = False):
     # Creación de la cola con un elemento inicial
     queue = [(0, start)]

@@ -30,6 +30,7 @@
     Salidas:
         1) Una lista con los nombres de los nodos que conforman la ruta más corta entre el nodo de partida y el nodo de llegada.
 '''
+### FUNCIÓN PRINCIPAL ###
 def weighted_a_star(graph, start, goal, heuristic, log = False, weight = 0):
     # Si el peso no se especifica o es menor a 1, se le solicita al usuario
     if weight < 1:
