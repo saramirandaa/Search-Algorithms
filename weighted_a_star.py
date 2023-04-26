@@ -9,7 +9,7 @@
 
     El presente código ofrece una función que calcula la ruta más corta entre dos nodos. Se utilizan los valores de la heurística de distancia de línea recta para informar la selección de nodos de manera que se expandan solo los nodos con la menor distancia de línea recta al nodo objetivo. 
 
-    La heurística se calcula de la siguiente manera: f(n) = g(n) + h(n), donde g(n) es el costo del camino desde el nodo de partida hasta el nodo n y h(n) es la distancia de línea recta entre el nodo n y el nodo de llegada.
+    La heurística se calcula de la siguiente manera: f(n) = g(n) + W * h(n), donde g(n) es el costo del camino desde el nodo de partida hasta el nodo n, h(n) es la distancia de línea recta entre el nodo n y el nodo de llegada y W es un valor que se utiliza para ponderar la heurística.
 
     Esta función está hecha para ser utilizada con un Graph de ciudades de México como parte del proyecto de segundo parcial, pero puede ser utilizada con cualquier Graph que tenga nodos con valores de heurística de distancia de línea recta.
 
@@ -25,11 +25,16 @@
         3) El nombre de un nodo de llegada
         4) Un diccionario con los valores de la heurística de distancia de línea recta
         5) Un valor booleano para imprimir los pasos del algoritmo
+        6) Un valor para ponderar la heurística
 
     Salidas:
         1) Una lista con los nombres de los nodos que conforman la ruta más corta entre el nodo de partida y el nodo de llegada.
 '''
-def a_star(graph, start, goal, heuristic, log = False):
+def weighted_a_star(graph, start, goal, heuristic, log = False, weight = 0):
+    # Si el peso no se especifica o es menor a 1, se le solicita al usuario
+    if weight < 1:
+        weight = float(input("Introduzca el peso de la heurística: "))
+
     # Creación de la cola con un elemento inicial
     queue = [(0, start)]
 
@@ -68,7 +73,7 @@ def a_star(graph, start, goal, heuristic, log = False):
             if child not in cost_so_far or new_cost < cost_so_far[child]:
                 cost_so_far[child] = new_cost
                 # Calculamos la prioridad del nodo hijo
-                priority = new_cost + heuristic[child]
+                priority = new_cost + weight * heuristic[child]
                 # Agregamos el nodo hijo a la cola
                 queue.append((priority, child))
                 queue.sort()
