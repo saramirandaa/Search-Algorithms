@@ -88,10 +88,9 @@ def menu():
     print("4. Beam Search (The Original algorithm)")
     print("5. Steepest Ascent Hill Climbing Search")
     print("6. Stochastic Hill Climbing Search")
-    print("7. Branch and bound")
-    print("8. Simulated Annealing")
-    print("9.Terminar")
-    opc = int(input("Introduzca la opción deseada (1-9): "))
+    print("7. Simulated Annealing")
+    print("8.Terminar")
+    opc = int(input("Introduzca la opción deseada (1-8): "))
     return opc
 
 ### FUNCIÓN PRINCIPAL ###
@@ -147,22 +146,16 @@ def main():
         print("Beam Search (The Original algorithm)")
         k = int(input("Introduce el beam width (ancho del haz): "))
         print(beam.BeamSearch(mexico_tree,start,goal,k, log =log))
-        pass
     elif (opc == 5):
         print("Steepest Ascent Hill Climbing Search")
         print(shc.steepest_hill_climbing(mexico_tree, start, goal, heuristics))
     elif (opc == 6):
         print("Stochastic Hill Climbing Search")
         # STOCHASTIC
-        pass
     elif (opc == 7):
-        print("Branch and bound")
-        # BRANCH AND BOUND
-        pass
-    elif (opc == 8):
         print("Simulated Annealing")
         print(sa.simulated_annealing(mexico_tree, start, goal, heuristics, log = log))
-    elif (opc == 9):
+    elif (opc == 8):
         print("Terminando...")
         exit()
 

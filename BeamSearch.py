@@ -29,59 +29,62 @@ import time
 def BeamSearch(tree, start_node, goal_node,k, log = False):
     # Inicio de tiempo de ejecución
     start_time = time.time()
-
+    # Crear la cola de búsqueda inicial con el nodo de inicio
     queue = [ (start_node, '') ]
-    
+
+     # Si el usuario selecciona log=True, imprime información paso a paso
     if log:
-        print('Beam search explanation\n')
-        print('Your selected maximum number of successors: {}\n\n'.format(k) )
-    
+        print('Elegiste la opción de explicación paso a paso\n')
+        print('Número de estados seleccionados  por el usuario: {}\n\n'.format(k) )
+    # Mientras haya nodos en la cola de búsqueda, continúa la búsqueda
     while queue:
-        
+         # Obtener el primer nodo de la cola de búsqueda
         actual_state = queue.pop(0)
-        print( '{}{}'.format( '\tActual node: ' if log else '' ,actual_state[0]) )
-        
+        print( '{}{}'.format( 'Nodo en donde nos encontramos: ' if log else '' ,actual_state[0]) )
+        # Si este nodo es el nodo objetivo, se ha encontrado el camino
         if actual_state[0] == goal_node:
-            print('\n\t\tSuccessful search!!!')
+            print('------ Se encontró un camino ------')
+            print(queue)
             return 
-        
+        # Obtener todos los nodos que son vecinos del nodo actual
         possible_nodes = [ city[1] for city in tree if city[0]  == actual_state[0] ]
+        # Calcular la distancia heurística de cada nodo vecino al nodo objetivo
         values = [ (city, get_haversine_distance(city, goal_node)) for city in possible_nodes ]
         
+        # Combinar los nodos vecinos con los nodos de la cola de búsqueda
         auxiliar_list = values.copy() + queue.copy()
         queue = []
         distances = [ distance[1] for distance in auxiliar_list ]
-        
+        # Seleccionar un número máximo de sucesores para explorar
         iterations = len( auxiliar_list )
         for city in range(iterations):
             
             if len(queue) >= k:
                 break
             
+            # Encuentra el siguiente nodo con la menor distancia heurística
             minimum =  min(distances) 
             
             next_node = auxiliar_list[ distances.index( minimum ) ]
             queue.append(next_node)
-            
+             # Elimina este nodo de la lista auxiliar para evitar duplicados
             auxiliar_list.remove(next_node)
             distances.remove( minimum )
-            
+            # Si el usuario selecciona log=True, imprime información paso a paso
+        
         if log:
-            print("\nWe start searching for its neighbours and their heuristic values")
+            print("\nBuscamos los vecinos y su heuristica")
             for index in range( len(values) ):
-                print('\tNeighbour: {}\t\tHeuristic value: {}'.format( 
+                print('\tVecino: {}\t\tHeuristica: {}'.format( 
                     values[index][0], values[index][1] ))
-            print('\nThen we combine all the neighbours with the previous selected successors')
-            print('and stay with the ones with less heuristic value')
             for index in range( len(queue) ):
-                print('\tSelected node: {}\t\tHeuristic value: {}'.format( 
+                print('\tNodo Seleccionado: {}\t\tHeuristica: {}'.format( 
                     queue[index][0], queue[index][1] ))
-            print('\nFinally we will explore the node with the less value')
-            print( '\tNext node: {}\n\n'.format( queue[0][0] ) )
+            print( '\tSiguiente nodo : {}\n\n'.format( queue[0][0] ) )
            
     
-        
-    print('\n\tFailed search ')
+    # Si no se encuentra una solución, la búsqueda falla
+    print('-----No se encontró una solución-----')
     return
     # Fin de tiempo de ejecución
     end_time = time.time()
