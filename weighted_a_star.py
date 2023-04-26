@@ -30,11 +30,17 @@
     Salidas:
         1) Una lista con los nombres de los nodos que conforman la ruta más corta entre el nodo de partida y el nodo de llegada.
 '''
+### DEPENDENCIAS ###
+import time
+
 ### FUNCIÓN PRINCIPAL ###
 def weighted_a_star(graph, start, goal, heuristic, log = False, weight = 0):
     # Si el peso no se especifica o es menor a 1, se le solicita al usuario
     if weight < 1:
         weight = float(input("Introduzca el peso de la heurística: "))
+
+    # Inicio de tiempo de ejecución
+    start_time = time.time()
 
     # Creación de la cola con un elemento inicial
     queue = [(0, start)]
@@ -87,6 +93,11 @@ def weighted_a_star(graph, start, goal, heuristic, log = False, weight = 0):
         current = came_from[current]
         path.append(current)
     path.reverse()
+
+    # Fin de tiempo de ejecución
+    end_time = time.time()
+    if log:
+        print("Tiempo de ejecución interno: ", end_time - start_time)
     
     # Regresamos la lista con los nodos de la ruta más corta
     return path

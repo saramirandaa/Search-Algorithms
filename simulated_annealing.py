@@ -32,6 +32,7 @@
         1) Una lista con los nombres de los nodos que conforman la ruta más corta entre el nodo de partida y el nodo de llegada.
 '''
 ### DEPENDENCIAS ###
+import time
 import random
 import math
 import a_star
@@ -45,6 +46,9 @@ def simulated_annealing(graph, start, goal, heuristic, T=0.0, alpha=1.0, stoppin
         alpha = float(input("El factor de reducción de la temperatura debe ser un valor entre 0 y 1. Ingrese un valor: "))
     if stopping_T <= 0:
         stopping_T = float(input("La temperatura mínima debe ser mayor que 0. Ingrese un valor: "))
+
+    # Inicio de tiempo de ejecución
+    start_time = time.time()
 
     # Inicialización de la solución y del costo
     current_solution = a_star.a_star(graph, start, goal, heuristic)
@@ -103,6 +107,11 @@ def simulated_annealing(graph, start, goal, heuristic, T=0.0, alpha=1.0, stoppin
         
         # Disminuimos la temperatura
         T = T * alpha
-    
+
+    # Fin de tiempo de ejecución
+    end_time = time.time()
+    if log:
+        print("Tiempo de ejecución interno: ", end_time - start_time)
+
     # Regresamos la mejor solución encontrada hasta el momento
     return best_solution

@@ -23,9 +23,14 @@
     Salidas:
         queue = lista con el camino a seguir
 '''
+### DEPENDENCIAS ###
+import time
 
-### FUNCIONES O CLASES DE APOYO ###
-def greedy_best_first(tree, start, goal, heuristic):
+### FUNCIÓN PRINCIPAL ###
+def greedy_best_first(tree, start, goal, heuristic, log = False):
+    # Inicio de tiempo de ejecución
+    start_time = time.time()
+
     queue = [start]
     new_node = ''
     if start == goal:
@@ -50,5 +55,10 @@ def greedy_best_first(tree, start, goal, heuristic):
 
         if new_node not in queue:
             queue.append(new_node)
+
+    # Fin de tiempo de ejecución
+    end_time = time.time()
+    if log:
+        print("Tiempo de ejecución interno: ", end_time - start_time)
     
     return queue

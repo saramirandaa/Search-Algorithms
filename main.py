@@ -58,7 +58,7 @@ log = True
 def ask_log():
     global log
     log = input("¿Desea imprimir información de depuración? (y/n): ")
-    if log == "y":
+    if log == "y" or log == "Y":
         log = True
     else:
         log = False
@@ -93,11 +93,11 @@ def main():
     mexico_graph = graph.csv_to_graph('matrix.csv', 'nodes.csv')
 
     # Se obtiene una lista de tuplas con el grafo
-    mexico_tree = mexico_graph.get_tuples_weights()
+    mexico_tree = mexico_graph.get_tuples()
         
     # Se define el nodo de inicio y el nodo meta
     start = "CANCUN"
-    goal = "MERIDA"
+    goal = "DURANGO"
 
     # Se obtiene una lista con las heurísticas 
     heuristics = heuristic.calcular_heuristica_distancia_de_linea_recta(goal)
@@ -106,6 +106,9 @@ def main():
     if log:
         print("Mexico Tree: " + str(mexico_tree) + "\n")
         print("Heuristics: " + str(heuristics) + "\n")
+
+    #a_star_queue = a_star.a_star(mexico_tree, start, goal, heuristics, log)
+    #print(a_star_queue)
 
     # Se imprime el menú de selección de algoritmos
     opc = menu()
@@ -117,7 +120,7 @@ def main():
     # Se ejecuta el algoritmo seleccionado
     if (opc == 1):
         print("Greedy Best-First Search")
-        print(gbf.greedy_best_first(mexico_tree, start, goal, heuristics))
+        print(gbf.greedy_best_first(mexico_tree, start, goal, heuristics, log = log))
     elif (opc == 2):
         print("Weighted A* Search")
         print(wa_star.weighted_a_star(mexico_tree, start, goal, heuristics, log = log))
@@ -148,7 +151,7 @@ def main():
 
     # Se obtiene el tiempo de fin
     end_time = time.time()
-    print("Tiempo de ejecución: " + str(end_time - start_time) + " segundos")
+    print("Tiempo de ejecución con entrada de usuario: " + str(end_time - start_time) + " segundos")
     print()
 
     # Se repite el menú de selección de algoritmos

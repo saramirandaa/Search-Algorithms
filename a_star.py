@@ -29,8 +29,14 @@
     Salidas:
         1) Una lista con los nombres de los nodos que conforman la ruta más corta entre el nodo de partida y el nodo de llegada.
 '''
+### DEPENDENCIAS ###
+import time
+
 ### FUNCIÓN PRINCIPAL ###
 def a_star(graph, start, goal, heuristic, log = False):
+    # Inicio de tiempo de ejecución
+    start_time = time.time()
+
     # Creación de la cola con un elemento inicial
     queue = [(0, start)]
 
@@ -82,6 +88,11 @@ def a_star(graph, start, goal, heuristic, log = False):
         current = came_from[current]
         path.append(current)
     path.reverse()
+
+    # Fin de tiempo de ejecución
+    end_time = time.time()
+    if log:
+        print("Tiempo de ejecución interno: ", end_time - start_time)
     
     # Regresamos la lista con los nodos de la ruta más corta
     return path
